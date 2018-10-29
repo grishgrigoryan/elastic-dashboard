@@ -1,0 +1,35 @@
+{
+  "name": "elastic-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "@elastic/eui": "^4.6.1",
+    "react-redux": "^5.1.0",
+    "react-router-dom": "^4.3.1",
+    "redux-form": "^7.4.2",
+    "reselect": "^4.0.0"
+  },
+  "scripts": {
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject"
+  },
+  "devDependencies": {
+    "@grishgrigoryan/react-scripts-ts-sass": "2.15.1",
+    "@types/jest": "^23.3.8",
+    "@types/node": "^10.12.0",
+    "@types/react": "^16.4.18",
+    "@types/react-dom": "^16.0.9",
+    "@types/react-redux": "^6.0.9",
+    "@types/react-router-dom": "^4.3.1",
+    "@types/redux-form": "^7.4.11",
+    "@types/reselect": "^2.2.0",
+    "@types/enzyme": "^3.1.14",
+    "@types/moment": "^2.13.0",
+    "@types/react-virtualized": "^9.18.7",
+    "typescript": "^3.1.3"
+  }
+}
