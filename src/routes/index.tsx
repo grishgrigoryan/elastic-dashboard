@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Products   from "../pages/Products";
 import {Session}  from "../pages/Session";
+import {EuiIcon} from '@elastic/eui';
 
 
 const PagePlaceholder = ({ match }: any) => {
@@ -8,97 +9,84 @@ const PagePlaceholder = ({ match }: any) => {
 }
 export const navigation: any = [
     {
-        name: 'Browser',
+        name: 'browser',
+        icon:<EuiIcon type="spacesApp" size='xxl'/>,
         items: [
             {
-                name: 'Product',
+                name: 'product',
                 component: Products,
             },
             {
-                name: 'Role',
+                name: 'role',
                 component: PagePlaceholder,
             },
             {
-                name: 'Session',
+                name: 'session',
                 component: Session,
             },
             {
-                name: 'User',
+                name: 'user',
                 component: PagePlaceholder,
             }
         ],
     },
     {
-        name: 'Jobs',
+        name: 'jobs',
+        icon:<EuiIcon type="createMultiMetricJob" size='xxl'/>,
         items: [
             {
-                name: 'All',
+                name: 'all',
                 component: PagePlaceholder,
             },
             {
-                name: 'Scheduled',
+                name: 'scheduled',
                 component: PagePlaceholder,
             },
             {
-                name: 'Status',
+                name: 'status',
                 component: PagePlaceholder,
             },
         ]
     },
     {
-        name: 'Logs',
+        name: 'logs',
+        icon:<EuiIcon type="monitoringApp" size='xxl'/>,
         items: [
             {
-                name: 'Info',
+                name: 'info',
                 component: PagePlaceholder,
             },
             {
-                name: 'Error',
+                name: 'error',
                 component: PagePlaceholder,
             }
         ]
     },
     {
-        name: 'Push',
+        name: 'push',
+        icon:<EuiIcon type="createMultiMetricJob" size='xxl'/>,
+
         items: [
             {
                 name: 'new',
                 component: PagePlaceholder,
             },
             {
-                name: 'Audiences',
+                name: 'audiences',
                 component: PagePlaceholder,
             }
         ]
     },
     {
-        name: 'Webhooks',
+        name: 'webhooks',
+        icon:<EuiIcon type="infraApp" size='xxl'/>,
+
         component: (PagePlaceholder),
     },
     {
-        name: 'Config',
-        component: PagePlaceholder,
-    },
-    {
-        name: 'Api Console',
-        component: PagePlaceholder,
-    },
+        name: 'config',
+        icon:<EuiIcon type="managementApp" size='xxl'/>,
 
+        component: PagePlaceholder,
+    }
 ];
-// export const routes = navigation.map(({ name, items, ...rest },key) => {
-//         let topItem: any = {
-//             name,
-//             type: slugify(name),
-//             key,
-//             ...rest
-//         };
-//         if (items) {
-//             topItem.items = items.map(({ name: itemName, ...rest },key) => ({
-//                 name: itemName,
-//                 key,
-//                 path: `${slugify(name)}/${slugify(itemName)}`,
-//                 ...rest,
-//             }));
-//         }
-//     }
-// );

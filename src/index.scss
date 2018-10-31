@@ -1,6 +1,37 @@
 @import "~@elastic/eui/src/theme_light";
-body {
-  margin: 0;
+
+.euiFlyout {
+  &.left {
+    left: 0;
+    animation: euiFlyout-left $euiAnimSpeedNormal $euiAnimSlightResistance;
+  }
+
+}
+
+@keyframes euiFlyout-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  75% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}
+.euiKeyPadMenuItem{
+  &.selected{
+    border-color: #562828;//$euiBorderColor;
+    @include euiSlightShadow;
+
+    .euiKeyPadMenuItem__icon {
+      transform: translateY(0);
+    }
+  }
+}
+.padding-0{
   padding: 0;
-  font-family: sans-serif;
+}
+.dashboard-page{
+  min-height: 100vh;
+  padding: 0;
 }

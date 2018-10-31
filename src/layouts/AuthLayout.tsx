@@ -1,15 +1,15 @@
-import * as React from 'react';
-import {RouteComponentProps}         from 'react-router-dom';
-import {EuiPage}                     from '@elastic/eui';
-import {EuiPageSideBar}              from '@elastic/eui';
-import {EuiPageBody}                 from '@elastic/eui';
-import {EuiPageHeader}               from '@elastic/eui';
-import {EuiTitle}                    from '@elastic/eui';
-import {EuiPageHeaderSection}        from '@elastic/eui';
-import {EuiPageContent}              from '@elastic/eui';
-import {EuiPageContentHeader}        from '@elastic/eui';
-import {EuiPageContentHeaderSection} from '@elastic/eui';
-import {SideNav}                     from "../containers/SideNav";
+import * as React                           from 'react';
+import {RouteComponentProps}                from 'react-router-dom';
+import {EuiPage, EuiFlexGroup, EuiFlexItem} from '@elastic/eui';
+import {EuiPageSideBar}                     from '@elastic/eui';
+import {EuiPageBody}                        from '@elastic/eui';
+import {EuiPageHeader}                      from '@elastic/eui';
+import {EuiTitle}                           from '@elastic/eui';
+import {EuiPageHeaderSection}               from '@elastic/eui';
+import {EuiPageContent}                     from '@elastic/eui';
+import {EuiPageContentHeader}               from '@elastic/eui';
+import {EuiPageContentHeaderSection}        from '@elastic/eui';
+import {SideNav}                            from "../containers/SideNav";
 
 
 export class AuthLayout extends React.Component<AuthLayoutProps, { open: boolean }> {
@@ -28,8 +28,8 @@ export class AuthLayout extends React.Component<AuthLayoutProps, { open: boolean
     render() {
         console.log("AuthLayout props", this.props);
         return (
-            <EuiPage restrictWidth={1240}>
-                <EuiPageSideBar>
+            <EuiPage className={'dashboard-page'}>
+                <EuiPageSideBar style={{ minWidth: 400 }} className={''}>
                     <SideNav/>
                 </EuiPageSideBar>
                 <EuiPageBody>

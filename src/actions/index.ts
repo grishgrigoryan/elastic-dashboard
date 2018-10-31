@@ -1,12 +1,14 @@
 import {Action}        from 'redux';
-import {doSomething}   from './dataActions';
-import {updateMessage} from './dataActions';
-import {extra}         from './dataActions';
+import {doSomething}   from './BrowseActions';
+import {updateMessage} from './BrowseActions';
+import {extra}         from './BrowseActions';
+import {updateUsers}   from "./EntityActions";
 
 
 export const Actions = createActions({
     updateMessage,
     extra,
+    updateUsers,
     doSomething
 });
 console.log("ACtions", Actions)

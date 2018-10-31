@@ -12,7 +12,7 @@ export class Products extends React.Component<ProductsProps, any> {
     @Connected
     get model() {
         return Connected.state((state: StoreState) => {
-            return { message: state.data.message }
+            return { message: state.browse.message }
         })
     }
 

@@ -1,4 +1,4 @@
-export const slugify = (str:string) => {
+export const slugify = (str: string) => {
     const parts = str
         .toLowerCase()
         .replace(/[-]+/g, ' ')
@@ -6,3 +6,6 @@ export const slugify = (str:string) => {
         .replace(/ +/g, ' ').split(' ');
     return parts.join('-');
 };
+export const ucfirst = (string: string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}

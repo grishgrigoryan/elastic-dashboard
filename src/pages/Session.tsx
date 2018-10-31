@@ -118,7 +118,7 @@ export const createDataStore = () => {
             }
         },
 
-        getCountry: (code) => countries.find(country => country.code === code)
+         getCountry: (code) => countries.find(country => country.code === code)
     };
 };
 const store = createDataStore();
