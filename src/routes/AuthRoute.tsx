@@ -7,47 +7,24 @@ import AuthLayout            from '../layouts/AuthLayout';
 import {StoreState}          from "../store/state";
 
 
-@Connected
 export class AuthRoute extends React.PureComponent<any, any> {
-
-    @Connected
-    get model() {
-        return Connected.state((state: StoreState) => {
-            return {
-                auth: state.session.auth,
-                applications: state.session.applications,
-            }
-        })
+  render() {
+    console.info(this.props);
+    const { component: Component, props = {}, location = {} } = this.props;
+    //const { match: { params: { applicationId } } } = renderProps;
+    //console.log(applicationId);
+    //let found = this.model.applications.filter((application) => application.id == applicationId);
+    if (!Parse.User.current()) {
+      return <Redirect
+        to={{
+          pathname: `/login`,
+          state: {
+            from: location.pathname || '/'
+          }
+        }}
+      />
+    } else {
+      return <Component {...props} />;
     }
-
-    renderRoute = (renderProps: RouteComponentProps<any>) => {
-        const { component } = this.props;
-        const { match: { params: { applicationId } } } = renderProps
-        console.log(applicationId);
-        let found = this.model.applications.filter((application) => application.id == applicationId);
-        if (!found.length) {
-            return <Redirect
-                to={{
-                    pathname: `/${ this.model.applications[0].id}/browser/product`,
-                    state: { from: renderProps.location }
-                }}
-            />
-        }
-        const Component = component;
-        let element = <Component {...renderProps} />;
-        return (
-            <AuthLayout {...renderProps}>
-                {element}
-            </AuthLayout>
-        );
-    };
-
-    render() {
-        const {
-            component,
-            redirectPath,
-            ...rest
-        } = this.props;
-        return <Route {...rest} render={this.renderRoute}/>;
-    }
+  }
 }

@@ -26,7 +26,6 @@ export class AuthLayout extends React.Component<AuthLayoutProps, { open: boolean
     };
 
     render() {
-        console.log("AuthLayout props", this.props);
         return (
             <EuiPage className={'dashboard-page'}>
                 <EuiPageSideBar style={{ minWidth: 400 }} className={''}>

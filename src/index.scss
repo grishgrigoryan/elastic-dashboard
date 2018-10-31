@@ -18,9 +18,10 @@
     transform: translateX(0%);
   }
 }
-.euiKeyPadMenuItem{
-  &.selected{
-    border-color: #562828;//$euiBorderColor;
+
+.euiKeyPadMenuItem {
+  &.selected {
+    border-color: #562828; //$euiBorderColor;
     @include euiSlightShadow;
 
     .euiKeyPadMenuItem__icon {
@@ -28,10 +29,44 @@
     }
   }
 }
-.padding-0{
+
+.padding-0 {
   padding: 0;
 }
-.dashboard-page{
+
+.dashboard-page {
   min-height: 100vh;
   padding: 0;
+}
+
+.euiPage {
+  padding: 0;
+}
+
+.euiPageSideBar {
+  margin: 0;
+  flex-direction: row;
+  display: flex;
+}
+
+.duiAppBar {
+  background-color: aqua;
+}
+
+.duiAppBarItem {
+  background-color: blue;
+  padding: 10px;
+  &--active {
+    background-color: bisque;
+  }
+}
+
+.duiNavBar {
+}
+
+.duiNavBarItem {
+  background-color: green;
+  &--active {
+    background-color: red;
+  }
 }
