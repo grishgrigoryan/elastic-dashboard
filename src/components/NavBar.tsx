@@ -12,10 +12,10 @@ export class NavBar extends React.Component<NavBarProps, NavBarState> {
     const {match} = this.props
     return (
       <Switch>
-        <Route path={match.url + "/browser"}>
+        <Route path={"/browser"}>
           <div className={'duiNavBar'}>
-            <NavBarItem to={`${match.url}/browser/users`}>Browser users</NavBarItem>
-            <NavBarItem to={`${match.url}/browser/admins`}>Browser admins</NavBarItem>
+            <NavBarItem to={`/browser/users`}>Browser users</NavBarItem>
+            <NavBarItem to={`/browser/admins`}>Browser admins</NavBarItem>
           </div>
         </Route>
         {/*<Route path={match.url + "/config"}>*/}
@@ -24,10 +24,10 @@ export class NavBar extends React.Component<NavBarProps, NavBarState> {
         {/*<NavBarItem to={`${match.url}/config/session`}>config admins</NavBarItem>*/}
         {/*</React.Fragment>*/}
         {/*</Route>*/}
-        <Route path={match.url + "/job"}>
+        <Route path={"/job"}>
           <div className={'duiNavBar'}>
-            <NavBarItem to={`${match.url}/job/all`}>Job new</NavBarItem>
-            <NavBarItem to={`${match.url}/job/status`}>Job last</NavBarItem>
+            <NavBarItem to={`/job/all`}>Job new</NavBarItem>
+            <NavBarItem to={`/job/status`}>Job last</NavBarItem>
           </div>
         </Route>
       </Switch>

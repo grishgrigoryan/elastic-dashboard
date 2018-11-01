@@ -28,8 +28,8 @@ export async function main() {
       <BrowserRouter>
         <Switch>
           <Route path='/login' component={Login}/>;
-          <AuthRoute path='/apps/:appId' component={App}/>;
-          <Redirect to='/apps/1'/>
+          <AuthRoute path='/' component={App}/>;
+          <Redirect to='/config'/>
         </Switch>
       </BrowserRouter>
     </Provider>,

@@ -32,13 +32,13 @@ export class ApplicationSelector extends React.Component<ApplicationSelectorProp
     });
   };
 
-  onAppSelect = (application: Application) => {
+  onAppSelect = (id: string) => {
     this.closeFlyout();
-    this.props.onApplicationChange(application)
+    this.props.onApplicationChange(id)
   };
 
   render() {
-    const {applications, selectedApplication} = this.props;
+    const {applications, selectedApplicationId} = this.props;
     const flyout = (
       <EuiFlyout className='left' ownFocus onClose={this.closeFlyout} size="s" aria-labelledby="flyoutSmallTitle">
         <EuiFlyoutHeader hasBorder>
@@ -49,13 +49,13 @@ export class ApplicationSelector extends React.Component<ApplicationSelectorProp
           </EuiTitle>
         </EuiFlyoutHeader>
         <EuiFlyoutBody>
-          {applications.map(({id, name}, index) => (
-            id != selectedApplication && <EuiFlexItem key={index}>
+          {Object.keys(applications).map((id, index) => (
+            id != selectedApplicationId && <EuiFlexItem key={index}>
               <EuiCard
-                icon={<EuiIcon size="xxl" type={iconMapping[id]}/>}
-                title={name}
+                icon={<EuiIcon size="xxl" type={applications[id].iconType}/>}
+                title={applications[id].name}
                 description={''}
-                onClick={() => this.onAppSelect({id, name})}
+                onClick={() => this.onAppSelect(id)}
               />
             </EuiFlexItem>
           ))}
@@ -65,7 +65,7 @@ export class ApplicationSelector extends React.Component<ApplicationSelectorProp
 
     return (
       <div className={'duiAppSelector'}>
-        <EuiIcon  onClick={this.onSelectorClick} type={iconMapping[this.props.selectedApplication]} size={"xl"}/>
+        <EuiIcon  onClick={this.onSelectorClick} type={applications[selectedApplicationId].iconType} size={"xl"}/>
         {this.state.isFlyoutVisible && flyout}
       </div>
     )
@@ -73,9 +73,9 @@ export class ApplicationSelector extends React.Component<ApplicationSelectorProp
 }
 
 export interface ApplicationSelectorProps {
-  selectedApplication: number,
-  applications: Array<Application>
-  onApplicationChange: (a: Application) => void
+  selectedApplicationId: string,
+  applications: any
+  onApplicationChange: (a: string) => void
 }
 
 export interface ApplicationSelectorState {

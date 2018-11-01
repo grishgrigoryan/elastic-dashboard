@@ -1,63 +1,70 @@
-export interface Application {
-    id: number,
-    name: string,
+import {IconType} from "@elastic/eui";
+
+export type Normalized<T> = {
+  [id: string]: T
 }
 
+
+export interface Application {
+  name: string,
+  masterKey: string
+  iconType: IconType
+}
+
+export type Applications = Normalized<Application>
+
 export interface SessionState {
-    auth: boolean,
-    username: 'grishgrigoryan',
-    applications?: Array<Application>,
+  user?: any
+  applications?: Applications,
+  selectedApplicationId?: string
 }
 
 export interface BrowseState {
-    message: string
-    selectedApplication?: number
+  message: string
+  loading: boolean
 }
 
 export interface EntitiesState {
 
 
-    user: Entity,
+  user: Entity,
 
-    [k: string]: any
+  [k: string]: any
 }
 
 export interface Entity {
-    byId: any
-    ids: Array<any>,
-    browse: {
-        totalPages?: number
-    }
+  byId: any
+  ids: Array<any>,
+  browse: {
+    totalPages?: number
+  }
 
-    [k: string]: any
+  [k: string]: any
 }
 
 export interface StoreState {
-    session: SessionState
-    browse: BrowseState,
-    entities: EntitiesState
+  session: SessionState
+  browse: BrowseState,
+  entities: EntitiesState
 }
 
 const initialState: StoreState = {
-    session: {
-        auth: true,
-        username:"grishgrigoryan",
-        applications: [
-            { id: 1, name: 'First Application' },
-            { id: 2, name: 'Second Application' },
-            { id: 3, name: 'Third Application' },
-        ]
+  session: {
+    user: null,
+    applications: {},
+    selectedApplicationId: null,
+  },
+  browse: {
+    loading: false,
+    message: 'INITIAL MESSAGE'
+  },
+  entities: {
+    user: {
+      byId: {},
+      ids: [],
+      browse: {}
     },
-    browse: {
-        message: 'INITIAL MESSAGE'
-    },
-    entities: {
-        user: {
-            byId: {},
-            ids: [],
-            browse: {}
-        },
-    }
+  }
 
 };
 export {initialState}

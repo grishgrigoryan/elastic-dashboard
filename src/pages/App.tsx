@@ -34,24 +34,24 @@ import {JobStatus}            from "./job/JobStatus";
 @WithRouter
 class PageComponent extends React.Component<any> {
   render() {
-    const {match} = this.props
     return <React.Fragment>
       <EuiFlexItem>
         <Switch>
-          <Route path={match.url + "/browser"}>
+          <Route path={"/browser"}>
             <Switch>
-              <Route path={"/apps/:appId/browser/:entity"} component={BrowserEntity}/>
-              <Route path={"/apps/:appId/browser/"} component={Browser}/>
+              <Route path={"/browser/:entity"} component={BrowserEntity}/>
+              <Route path={"/browser/"} component={Browser}/>
             </Switch>
           </Route>
-          <Route path={match.url + "/job"}>
+          <Route path={"/job"}>
             <Switch>
-              <Route path={"/apps/:appId/job/all"} component={JobAll}/>
-              <Route path={"/apps/:appId/job/status"} component={JobStatus}/>
-              <Route path={"/apps/:appId/job/"} component={Job}/>
+              <Route path={"/job/all"} component={JobAll}/>
+              <Route path={"/job/status"} component={JobStatus}/>
+              <Route path={"/job/"} component={Job}/>
             </Switch>
           </Route>
-          <Route path={"/apps/:appId/config/"} component={Config}/>
+          <Route path={"/config"} component={Config}/>
+          <Route path={"/"} component={()=>(<div>Index page ?</div>)}/>
         </Switch>
       </EuiFlexItem>
     </React.Fragment>
@@ -60,12 +60,7 @@ class PageComponent extends React.Component<any> {
 
 export class App extends React.Component<LoginProps, LoginState> {
 
-  componentDidMount(){
-    console.log("componentDidMount")
-  }
-
   render() {
-    console.log("App page where we know app id ", this.props);
     return <EuiPage style={{minHeight: "100vh"}}>
       <EuiPageSideBar>
         <AppBar/>
