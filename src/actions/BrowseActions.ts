@@ -12,7 +12,7 @@ export function doSomething(message: string) {
 
 export function extra(message: string) {
     console.log("extra upper");
-    return async (dispatch: any, getState: any) => {
+    return  (dispatch: any, getState: any) => {
         console.log("extra inner");
         dispatch(Actions.updateMessage(message));
     }
