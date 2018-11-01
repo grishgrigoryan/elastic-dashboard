@@ -1,4 +1,5 @@
 /// <reference types="parse" />
+import './types';
 import * as React      from 'react';
 import {render}        from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
@@ -28,7 +29,7 @@ export async function main() {
         <Switch>
           <Route path='/login' component={Login}/>;
           <AuthRoute path='/apps/:appId' component={App}/>;
-          <Redirect to='/'/>
+          <Redirect to='/apps/1'/>
         </Switch>
       </BrowserRouter>
     </Provider>,

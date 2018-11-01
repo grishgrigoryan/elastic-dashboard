@@ -40,18 +40,18 @@ class PageComponent extends React.Component<any> {
         <Switch>
           <Route path={match.url + "/browser"}>
             <Switch>
-              <Route path={match.url + "/browser/:entity"} component={BrowserEntity}/>
-              <Route path={match.url + "/browser/"} component={Browser}/>
+              <Route path={"/apps/:appId/browser/:entity"} component={BrowserEntity}/>
+              <Route path={"/apps/:appId/browser/"} component={Browser}/>
             </Switch>
           </Route>
           <Route path={match.url + "/job"}>
             <Switch>
-              <Route path={match.url + "/job/all"} component={JobAll}/>
-              <Route path={match.url + "/job/status"} component={JobStatus}/>
-              <Route path={match.url + "/job/"} component={Job}/>
+              <Route path={"/apps/:appId/job/all"} component={JobAll}/>
+              <Route path={"/apps/:appId/job/status"} component={JobStatus}/>
+              <Route path={"/apps/:appId/job/"} component={Job}/>
             </Switch>
           </Route>
-          <Route path={match.url + "/config/"} component={Config}/>
+          <Route path={"/apps/:appId/config/"} component={Config}/>
         </Switch>
       </EuiFlexItem>
     </React.Fragment>
@@ -59,8 +59,14 @@ class PageComponent extends React.Component<any> {
 }
 
 export class App extends React.Component<LoginProps, LoginState> {
+
+  componentDidMount(){
+    console.log("componentDidMount")
+  }
+
   render() {
-    return <EuiPage style={{height: "100vh"}}>
+    console.log("App page where we know app id ", this.props);
+    return <EuiPage style={{minHeight: "100vh"}}>
       <EuiPageSideBar>
         <AppBar/>
         <NavBar/>
