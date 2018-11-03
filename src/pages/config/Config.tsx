@@ -21,6 +21,7 @@ export class Config extends React.Component<ConfigProps, ConfigState> {
 
   render() {
     const {selectedApp} = this.model;
+    console.log("Selected app", selectedApp)
     return (
       <EuiEmptyPrompt
         title={<h2>Application name/id :{selectedApp.name}</h2>}

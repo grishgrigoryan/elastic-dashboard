@@ -1,12 +1,15 @@
 import {combineReducers} from 'redux';
-import {browse}            from './browse';
+import {app}             from "./app";
+import {browse}          from './browse';
 import {session}         from './session';
-import {entities}         from './entities';
-import {StoreState}      from '../store/state';
+import {entities}        from './entities';
+import {reducer as form} from 'redux-form'
 
 
 export default combineReducers({
-    browse,
-    entities,
-    session,
+  browse,
+  app,
+  entities,
+  session,
+  form
 });

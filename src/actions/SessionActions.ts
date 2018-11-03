@@ -1,3 +1,4 @@
+import {Application}  from "../store/state";
 import {Applications} from "../store/state";
 import {Actions}      from "./index";
 
@@ -5,43 +6,42 @@ import {Actions}      from "./index";
 export function changeSelectedApplicationId(selectedApplicationId: string) {
   return {selectedApplicationId}
 }
-
-export function updateApplications(applications:Applications) {
+export function updateApplications(applications: Applications) {
   return {applications}
 }
-
 export function updateSessionUser(user: any) {
   return {user}
 }
-
-export function doSomething(message: string) {
-
-  return {message: message, someExtraOption: {items: [{firstName: "Jogn"}], total: 1}}
-}
-
 export const authorize = (username: string, password: string) => {
   return async (dispatch: any, getState: any) => {
-    try {
-      dispatch(Actions.showLoader());
       let user = await Parse.User.logIn(username, password);
-      dispatch(Actions.hideLoader());
       dispatch(Actions.updateSessionUser(user));
       return true;
-    } catch (e) {
-      dispatch(Actions.hideLoader());
-      alert("Invalid cred")
-    }
   }
 }
 
-export const changeSelectedApplication = (selectedApplicationId: string) => {
+export const fetchApplications = () => {
+  return async (dispatch: any, getState: any) => {
+    let applications: Array<any> = await new Parse.Query("App").find();
+    let fistAppId: string = applications[0].id;
+    let normApp: Applications = applications.reduce((normalized, {id, attributes}) => {
+      normalized[id] = {...{id}, ...attributes};
+      return normalized;
+    }, {});
+    dispatch(Actions.updateApplications(normApp));
+    dispatch(changeSelectedApplication(normApp[fistAppId]))
+    return true;
+  }
+}
+
+export const changeSelectedApplication = (application: Application) => {
   return async (dispatch: any, getState: any) => {
     try {
       dispatch(Actions.showLoader());
-      //todo re-initialize Parse.
-      //todo clean/reset store
-      //todo get schemas
-      dispatch(Actions.changeSelectedApplicationId(selectedApplicationId));
+      Parse.initialize(application.applicationId, application.masterKey);
+      Parse.serverURL = application.serverURL;
+      Parse.masterKey = application.masterKey;
+      dispatch(Actions.changeSelectedApplicationId(application.id));
       dispatch(Actions.hideLoader());
     } catch (e) {
       dispatch(Actions.hideLoader());

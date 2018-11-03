@@ -1,4 +1,5 @@
 import * as React                from 'react';
+import {Applications}            from "../store/state";
 import {Application}             from "../store/state";
 import {EuiFlyout}               from '@elastic/eui';
 import {EuiFlyoutHeader}         from '@elastic/eui';
@@ -32,13 +33,13 @@ export class ApplicationSelector extends React.Component<ApplicationSelectorProp
     });
   };
 
-  onAppSelect = (id: string) => {
+  onAppSelect = (app: Application) => {
     this.closeFlyout();
-    this.props.onApplicationChange(id)
+    this.props.onApplicationChange(app)
   };
 
   render() {
-    const {applications, selectedApplicationId} = this.props;
+    const {applications, selectedApplication} = this.props;
     const flyout = (
       <EuiFlyout className='left' ownFocus onClose={this.closeFlyout} size="s" aria-labelledby="flyoutSmallTitle">
         <EuiFlyoutHeader hasBorder>
@@ -50,12 +51,12 @@ export class ApplicationSelector extends React.Component<ApplicationSelectorProp
         </EuiFlyoutHeader>
         <EuiFlyoutBody>
           {Object.keys(applications).map((id, index) => (
-            id != selectedApplicationId && <EuiFlexItem key={index}>
+            id != selectedApplication.id && <EuiFlexItem key={index}>
               <EuiCard
                 icon={<EuiIcon size="xxl" type={applications[id].iconType}/>}
                 title={applications[id].name}
                 description={''}
-                onClick={() => this.onAppSelect(id)}
+                onClick={() => this.onAppSelect(applications[id])}
               />
             </EuiFlexItem>
           ))}
@@ -65,7 +66,7 @@ export class ApplicationSelector extends React.Component<ApplicationSelectorProp
 
     return (
       <div className={'duiAppSelector'}>
-        <EuiIcon  onClick={this.onSelectorClick} type={applications[selectedApplicationId].iconType} size={"xl"}/>
+        <EuiIcon onClick={this.onSelectorClick} type={selectedApplication.iconType} size={"xl"}/>
         {this.state.isFlyoutVisible && flyout}
       </div>
     )
@@ -73,9 +74,9 @@ export class ApplicationSelector extends React.Component<ApplicationSelectorProp
 }
 
 export interface ApplicationSelectorProps {
-  selectedApplicationId: string,
-  applications: any
-  onApplicationChange: (a: string) => void
+  selectedApplication: Application,
+  applications: Applications
+  onApplicationChange: (a: Application) => void
 }
 
 export interface ApplicationSelectorState {

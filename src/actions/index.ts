@@ -4,7 +4,11 @@ import {showLoader}                  from "./BrowseActions";
 import {doSomething}                 from './BrowseActions';
 import {updateMessage}               from './BrowseActions';
 import {extra}                       from './BrowseActions';
-import {updateUsers}                 from "./EntityActions";
+import {updateSchemas}               from "./AppActions";
+import {initialized}                 from "./AppActions";
+import {updateEntity}                from "./EntityActions";
+import {fetchingEntity}                from "./EntityActions";
+import {errorMessageEntity}                from "./EntityActions";
 import {updateApplications}          from "./SessionActions";
 import {changeSelectedApplicationId} from "./SessionActions";
 import {updateSessionUser}           from "./SessionActions";
@@ -13,12 +17,18 @@ import {updateSessionUser}           from "./SessionActions";
 export const Actions = createActions({
   updateMessage,
   extra,
-  updateUsers,
   showLoader,
   changeSelectedApplicationId,
   updateApplications,
   hideLoader,
+  updateSchemas,
+  initialized,
   updateSessionUser,
+  // ENTITY
+  updateEntity,
+  fetchingEntity,
+  errorMessageEntity,
+  //
   doSomething
 });
 export type Actions = ActionUnion<typeof Actions>;

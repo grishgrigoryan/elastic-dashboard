@@ -1,25 +1,30 @@
-import * as React                  from 'react';
-import {EuiButton}                 from '@elastic/eui';
-import {EuiLoadingSpinner}         from '@elastic/eui';
-import {EuiFieldPassword}          from '@elastic/eui';
-import {EuiFlexItem}               from '@elastic/eui';
-import {EuiForm}                   from '@elastic/eui';
-import {EuiFormRow}                from '@elastic/eui';
-import {EuiFieldText}              from '@elastic/eui';
-import {EuiPageContentBody}        from '@elastic/eui';
-import {EuiPageContent}            from '@elastic/eui';
-import {EuiPageBody}               from '@elastic/eui';
-import {EuiPage}                   from '@elastic/eui';
-import {Actions}                   from "../actions";
-import {changeSelectedApplication} from "../actions/SessionActions";
-import {authorize}                 from "../actions/SessionActions";
-import {Connected}                 from "../decorators/Connected";
-import {getBrowse}                 from "../selectors/browse";
-import {Applications}              from "../store/state";
-import {StoreState}                from "../store/state";
-import {RouteComponentProps}       from 'react-router-dom';
+import * as React            from 'react';
+import {EuiButton}           from '@elastic/eui';
+import {EuiLoadingSpinner}   from '@elastic/eui';
+import {EuiFieldPassword}    from '@elastic/eui';
+import {EuiFlexItem}         from '@elastic/eui';
+import {EuiForm}             from '@elastic/eui';
+import {EuiFormRow}          from '@elastic/eui';
+import {EuiFieldText}        from '@elastic/eui';
+import {EuiPageContentBody}  from '@elastic/eui';
+import {EuiPageContent}      from '@elastic/eui';
+import {EuiPageBody}         from '@elastic/eui';
+import {EuiPage}             from '@elastic/eui';
+import {fetchSchemas}        from "../actions/AppActions";
+import {fetchApplications}   from "../actions/SessionActions";
+import {authorize}           from "../actions/SessionActions";
+import {Connected}           from "../decorators/Connected";
+import {ReduxForm}           from "../decorators/ReduxForm";
+import {getBrowse}           from "../selectors/browse";
+import {StoreState}          from "../store/state";
+import {RouteComponentProps} from 'react-router-dom';
+import {Form}                from 'redux-form';
+import {InjectedFormProps}   from 'redux-form';
+import {Field}               from 'redux-form';
+import {SubmissionError}     from 'redux-form'
 
 
+@ReduxForm({form: 'login'})
 @Connected
 export class Login extends React.Component<LoginProps, LoginState> {
   state = {
@@ -36,28 +41,38 @@ export class Login extends React.Component<LoginProps, LoginState> {
 
   @Connected
   get actions() {
-    const updateApplications = Actions.updateApplications
     return Connected.actions({
-      authorize, changeSelectedApplication, updateApplications
+      authorize, fetchApplications, fetchSchemas
     })
   }
 
-  onSubmit = async () => {
+
+  mySubmitFunction = async ({username, password}) => {
     try {
-      await this.actions.authorize(this.state.username, this.state.password)
-      let applications: Array<any> = await new Parse.Query("App").find();
-      let fistAppId = applications[0].id;
-      let normApp: Applications = applications.reduce((normalized, {id, attributes}) => {
-        normalized[id] = attributes;
-        return normalized;
-      }, {});
-      this.actions.updateApplications(normApp);
-      this.actions.changeSelectedApplication(fistAppId);
+      await this.actions.authorize(username, password)
+    } catch (e) {
+      throw new SubmissionError({
+        username: 'User does not exist',
+        _error: 'Login failed!'
+      })
+    }
+    try {
+      await this.actions.fetchApplications();
+      await this.actions.fetchSchemas();
       this.props.history.push(`/config`)
     } catch (e) {
-      console.error(e);
+      alert()
     }
+
   };
+
+  renderTextField = ({input, meta: {touched, valid}, ...rest}) => {
+    return <EuiFieldText  {...input} {...rest} isInvalid={!valid}/>
+  }
+
+  renderPasswordField = ({input}) => (
+    <EuiFieldPassword  {...input} />
+  );
 
   render() {
     return <EuiPage style={{height: "100vh"}}>
@@ -66,23 +81,19 @@ export class Login extends React.Component<LoginProps, LoginState> {
           <EuiPageContentBody>
             <EuiFlexItem style={{minWidth: 300}}>
               {this.model.loading && "LOADINF"}
-              <EuiForm>
-                <EuiFormRow label="Username" fullWidth={true}>
-                  <EuiFieldText
-                    value={this.state.username}
-                    name="username" onChange={(e) => this.setState({username: e.target.value})}
-                  />
-                </EuiFormRow>
-                <EuiFormRow itemType='password' label="Password" fullWidth={true}>
-                  <EuiFieldPassword
-                    value={this.state.password} name="password"
-                    onChange={(e) => this.setState({password: e.target.value})}
-                  />
-                </EuiFormRow>
-                <EuiFlexItem>
-                  <EuiButton onClick={this.onSubmit} type="submit" size="s" fill>Login</EuiButton>
-                </EuiFlexItem>
-              </EuiForm>
+              <Form onSubmit={this.props.handleSubmit(this.mySubmitFunction)}>
+                <EuiForm>
+                  <EuiFormRow label="Username" fullWidth={true}>
+                    <Field name="username" component={this.renderTextField}/>
+                  </EuiFormRow>
+                  <EuiFormRow label="Password" fullWidth={true}>
+                    <Field name="password" component={this.renderPasswordField}/>
+                  </EuiFormRow>
+                  <EuiFlexItem>
+                    <EuiButton isLoading={this.props.submitting} type="submit" size="s" fill>Login</EuiButton>
+                  </EuiFlexItem>
+                </EuiForm>
+              </Form>
             </EuiFlexItem>
           </EuiPageContentBody>
         </EuiPageContent>
@@ -91,7 +102,7 @@ export class Login extends React.Component<LoginProps, LoginState> {
   }
 }
 
-export interface LoginProps extends RouteComponentProps<any> {
+export interface LoginProps extends InjectedFormProps, RouteComponentProps<any> {
 
 }
 

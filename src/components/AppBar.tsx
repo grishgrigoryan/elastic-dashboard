@@ -31,8 +31,8 @@ export class AppBar extends React.Component<AppBarProps, AppBarState> {
     return Connected.actions({changeSelectedApplication})
   }
 
-  onApplicationChange = (id: string) => {
-    this.actions.changeSelectedApplication(id)
+  onApplicationChange = (application: Application) => {
+    this.actions.changeSelectedApplication(application);
     this.props.history.push(`/config`);
   };
 
@@ -40,7 +40,7 @@ export class AppBar extends React.Component<AppBarProps, AppBarState> {
     return <div className={'duiAppBar'}>
       <ApplicationSelector
         applications={this.model.applications}
-        selectedApplicationId={this.model.selectedAppId}
+        selectedApplication={this.model.selectedApp}
         onApplicationChange={this.onApplicationChange}
       />
       <AppBarItem to={`/browser`} iconType={'addDataApp'}/>

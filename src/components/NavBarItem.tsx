@@ -4,9 +4,10 @@ import {NavLink}  from 'react-router-dom';
 export class NavBarItem extends React.Component<NavBarItemProps, NavBarItemState> {
 
   render() {
-    return <NavLink to={this.props.to} className="duiNavBarItem"
+    const {to,children, ...other} = this.props;
+    return <NavLink {...other} to={to} className="duiNavBarItem"
                     activeClassName={'duiNavBarItem--active'}>
-      {this.props.children}
+      {children}
     </NavLink>
   }
 }
