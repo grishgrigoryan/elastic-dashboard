@@ -30,8 +30,8 @@ export class NavBar extends React.Component<NavBarProps, NavBarState> {
   }
 
   render() {
-    const {match} = this.props;
     const {entities} = this.model;
+
     return (
       <Switch>
         <Route path={"/browser"}>
@@ -39,7 +39,9 @@ export class NavBar extends React.Component<NavBarProps, NavBarState> {
             {entities.map((entityName, index) => (
               <NavBarItem key={index} to={`/browser/${entityName}`}>{entityName}</NavBarItem>)
             )}
-              <EuiButton fill={true} onClick={this.actions.fetchSchemas} >Refresh</EuiButton>
+            <EuiButton fill={true} onClick={this.actions.fetchSchemas}>Refresh</EuiButton>
+            <EuiButton fill={true} onClick={this.actions.fetchSchemas}>Add class</EuiButton>
+
           </div>
         </Route>
         {/*<Route path={match.url + "/config"}>*/}

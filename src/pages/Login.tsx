@@ -68,7 +68,7 @@ export class Login extends React.Component<LoginProps, LoginState> {
 
   renderTextField = ({input, meta: {touched, valid}, ...rest}) => {
     return <EuiFieldText  {...input} {...rest} isInvalid={!valid}/>
-  }
+  };
 
   renderPasswordField = ({input}) => (
     <EuiFieldPassword  {...input} />

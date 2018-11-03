@@ -21,8 +21,6 @@ declare global {
 }
 
 export async function main() {
-  Parse.initialize('KQEi9xr2OZZ5RFmfQTCUaJB0JoZUxbE5H6mgwGng', '3qbWEr513fbmoQIafSm2fU6PbC1eNwXxM0rws2Gp');
-  Parse.serverURL = 'https://parseapi.back4app.com/';
   render(
     <Provider store={store}>
       <BrowserRouter>
