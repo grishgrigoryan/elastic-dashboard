@@ -1,7 +1,20 @@
 import * as React            from 'react';
 import {RouteComponentProps} from 'react-router-dom';
 import {EuiInMemoryTable}    from "@elastic/eui";
+import {EuiButton}           from "@elastic/eui";
+import {EuiTitle}            from "@elastic/eui";
+import {EuiForm}             from '@elastic/eui';
+import {EuiModal}            from '@elastic/eui';
+import {EuiOverlayMask}      from '@elastic/eui';
+import {EuiModalHeader}      from '@elastic/eui';
+import {EuiModalHeaderTitle} from '@elastic/eui';
+import {EuiModalBody}        from '@elastic/eui';
+import {EuiModalFooter}      from '@elastic/eui';
+import {EuiButtonEmpty}      from '@elastic/eui';
+import {fetchSchemas}        from "../../actions/AppActions";
+import {deleteSchema}        from "../../actions/AppActions";
 import {fetchEntity}         from "../../actions/EntityActions";
+import {ConfirmationModal}   from "../../components/ConfirmationModal";
 import {Connected}           from "../../decorators/Connected";
 import {WithRouter}          from "../../decorators/WithRouter";
 import {getSchemas}          from "../../selectors/app";
@@ -10,6 +23,11 @@ import {StoreState}          from "../../store/state";
 @WithRouter
 @Connected
 export class BrowserEntity extends React.Component<BrowserEntityProps, BrowserEntityState> {
+
+  state = {
+    isModalVisible: false,
+  };
+
 
   @Connected
   get model() {
@@ -23,7 +41,7 @@ export class BrowserEntity extends React.Component<BrowserEntityProps, BrowserEn
 
   @Connected
   get actions() {
-    return Connected.actions({fetchEntity})
+    return Connected.actions({fetchEntity, deleteSchema, fetchSchemas})
   }
 
   componentWillReceiveProps(nextProp) {
@@ -59,12 +77,43 @@ export class BrowserEntity extends React.Component<BrowserEntityProps, BrowserEn
     })
   }
 
+  closeModal = () => {
+    this.setState({isModalVisible: false});
+  };
+
+  showModal = () => {
+    this.setState({isModalVisible: true});
+  };
+
+  removeSchema = async () => {
+    await this.actions.deleteSchema(this.props.match.params.entity);
+    this.props.history.push(`/browser/`)
+    await this.actions.fetchSchemas();
+  };
+
+  renderModal = () => {
+    return (this.state.isModalVisible &&
+      <ConfirmationModal
+        onClose={this.closeModal}
+        onConfirm={this.removeSchema}
+        ctaText="Remove"
+        title={`Delete class "${this.props.match.params.entity}" ?`}
+        body="You can't recover deleted data."
+      />
+    );
+  };
 
   render() {
     const {entity = {browse: {fetching: true}}} = this.model || {};
     //todo replace EuiInMemoryTable
     return (<div>
-      BrowserEntity - entity {this.props.match.params.entity}<br/>
+      <div className='duiEntityHeader'>
+        <EuiTitle>
+          <h2>{this.props.match.params.entity}</h2>
+        </EuiTitle>
+        <EuiButton onClick={this.showModal}>Remove Class</EuiButton>
+      </div>
+      {this.renderModal()}
       BrowserEntity - fetching {entity.browse.fetching ? "YES" : "NO"}<br/>
       <EuiInMemoryTable
         loading={entity.browse.fetching}
@@ -81,5 +130,6 @@ export interface BrowserEntityProps extends Partial<RouteComponentProps<{ entity
 }
 
 export interface BrowserEntityState {
+  isModalVisible: boolean
 }
     

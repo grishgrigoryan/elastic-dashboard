@@ -13,6 +13,7 @@ import {EuiPage}             from '@elastic/eui';
 import {fetchSchemas}        from "../actions/AppActions";
 import {fetchApplications}   from "../actions/SessionActions";
 import {authorize}           from "../actions/SessionActions";
+import {Input}               from "../components/form/Input";
 import {Connected}           from "../decorators/Connected";
 import {ReduxForm}           from "../decorators/ReduxForm";
 import {getBrowse}           from "../selectors/browse";
@@ -47,7 +48,7 @@ export class Login extends React.Component<LoginProps, LoginState> {
   }
 
 
-  mySubmitFunction = async ({username, password}) => {
+  onFormSubmit = async ({username, password}) => {
     try {
       await this.actions.authorize(username, password)
     } catch (e) {
@@ -66,14 +67,6 @@ export class Login extends React.Component<LoginProps, LoginState> {
 
   };
 
-  renderTextField = ({input, meta: {touched, valid}, ...rest}) => {
-    return <EuiFieldText  {...input} {...rest} isInvalid={!valid}/>
-  };
-
-  renderPasswordField = ({input}) => (
-    <EuiFieldPassword  {...input} />
-  );
-
   render() {
     return <EuiPage style={{height: "100vh"}}>
       <EuiPageBody>
@@ -81,14 +74,10 @@ export class Login extends React.Component<LoginProps, LoginState> {
           <EuiPageContentBody>
             <EuiFlexItem style={{minWidth: 300}}>
               {this.model.loading && "LOADINF"}
-              <Form onSubmit={this.props.handleSubmit(this.mySubmitFunction)}>
+              <Form onSubmit={this.props.handleSubmit(this.onFormSubmit)}>
                 <EuiForm>
-                  <EuiFormRow label="Username" fullWidth={true}>
-                    <Field name="username" component={this.renderTextField}/>
-                  </EuiFormRow>
-                  <EuiFormRow label="Password" fullWidth={true}>
-                    <Field name="password" component={this.renderPasswordField}/>
-                  </EuiFormRow>
+                  <Field name="username" label="Username" component={Input}/>
+                  <Field name="password" label="Password" type={'password'} component={Input}/>
                   <EuiFlexItem>
                     <EuiButton isLoading={this.props.submitting} type="submit" size="s" fill>Login</EuiButton>
                   </EuiFlexItem>

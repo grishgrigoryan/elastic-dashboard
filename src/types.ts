@@ -5,5 +5,7 @@ declare module '@elastic/eui' {
 declare namespace Parse {
   class Schema extends Object {
     static all(): Promise<Array<any>>;
+
+    delete(): Promise<Array<any>>;
   }
 }

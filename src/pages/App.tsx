@@ -24,45 +24,18 @@ import {Route}                  from 'react-router-dom';
 import {Actions}                from "../actions";
 import {fetchSchemas}           from "../actions/AppActions";
 import {AppBar}                 from "../components/AppBar";
-import {NavBar}                 from "../components/NavBar";
 import {Connected}              from "../decorators/Connected";
-import {WithRouter}             from '../decorators/WithRouter';
 import {getSelectedApplication} from "../selectors/session";
 import {StoreState}             from "../store/state";
 import {Browser}                from "./browser/Browser";
 import {BrowserEntity}          from "./browser/BrowserEntity";
+import {BrowserNavBar}          from "./browser/BrowserNavBar";
 import {Config}                 from "./config/Config";
 import {Job}                    from "./job/Job";
 import {JobAll}                 from "./job/JobAll";
+import {JobNavBar}              from "./job/JobNavBar";
 import {JobStatus}              from "./job/JobStatus";
 
-
-@WithRouter
-class PageComponent extends React.Component<any> {
-  render() {
-    return <React.Fragment>
-      <EuiFlexItem>
-        <Switch>
-          <Route path={"/browser"}>
-            <Switch>
-              <Route path={"/browser/:entity"} component={BrowserEntity}/>
-              <Route path={"/browser/"} component={Browser}/>
-            </Switch>
-          </Route>
-          <Route path={"/job"}>
-            <Switch>
-              <Route path={"/job/all"} component={JobAll}/>
-              <Route path={"/job/status"} component={JobStatus}/>
-              <Route path={"/job/"} component={Job}/>
-            </Switch>
-          </Route>
-          <Route path={"/config"} component={Config}/>
-          <Route path={"/"} component={() => (<div>Index page ?</div>)}/>
-        </Switch>
-      </EuiFlexItem>
-    </React.Fragment>
-  }
-}
 
 @Connected
 export class App extends React.Component<LoginProps, LoginState> {
@@ -100,10 +73,31 @@ export class App extends React.Component<LoginProps, LoginState> {
     return (initialized && <EuiPage style={{minHeight: "100vh"}}>
         <EuiPageSideBar>
           <AppBar/>
-          <NavBar/>
+          <Switch>
+            <Route path={"/browser"} component={BrowserNavBar}/>
+            <Route path={"/job"} component={JobNavBar}/>
+          </Switch>
         </EuiPageSideBar>
         <EuiPageBody>
-          <PageComponent/>
+          <EuiFlexItem>
+            <Switch>
+              <Route path={"/browser"}>
+                <Switch>
+                  <Route path={"/browser/:entity"} component={BrowserEntity}/>
+                  <Route path={"/browser/"} component={Browser}/>
+                </Switch>
+              </Route>
+              <Route path={"/job"}>
+                <Switch>
+                  <Route path={"/job/all"} component={JobAll}/>
+                  <Route path={"/job/status"} component={JobStatus}/>
+                  <Route path={"/job/"} component={Job}/>
+                </Switch>
+              </Route>
+              <Route path={"/config"} component={Config}/>
+              <Route path={"/"} component={() => (<div>Index page ?</div>)}/>
+            </Switch>
+          </EuiFlexItem>
         </EuiPageBody>
       </EuiPage>
     )
