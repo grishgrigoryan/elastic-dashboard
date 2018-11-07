@@ -6,6 +6,9 @@ declare namespace Parse {
   class Schema extends Object {
     static all(): Promise<Array<any>>;
 
-    delete(): Promise<Array<any>>;
+    delete(): Promise<any>;
+    update(): Promise<any>;
+    get(): Promise<Schema>;
+    deleteField(fieldName:string): any
   }
 }

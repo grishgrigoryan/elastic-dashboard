@@ -41,7 +41,6 @@ export const fetchApplications = () => {
     }, {});
     dispatch(Actions.updateApplications(normApp));
     dispatch(changeSelectedApplication(normApp[fistAppId]))
-
     return true;
   }
 };

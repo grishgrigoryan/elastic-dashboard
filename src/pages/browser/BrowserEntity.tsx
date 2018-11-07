@@ -14,18 +14,20 @@ import {EuiButtonEmpty}      from '@elastic/eui';
 import {fetchSchemas}        from "../../actions/AppActions";
 import {deleteSchema}        from "../../actions/AppActions";
 import {fetchEntity}         from "../../actions/EntityActions";
-import {ConfirmationModal}   from "../../components/ConfirmationModal";
 import {Connected}           from "../../decorators/Connected";
 import {WithRouter}          from "../../decorators/WithRouter";
 import {getSchemas}          from "../../selectors/app";
 import {StoreState}          from "../../store/state";
+import {InjectedFormProps}   from "redux-form";
+import {BrowserEntityHeader} from "./BrowserEntityHeader";
 
 @WithRouter
 @Connected
 export class BrowserEntity extends React.Component<BrowserEntityProps, BrowserEntityState> {
 
   state = {
-    isModalVisible: false,
+    isRemoveModalVisible: false,
+    isAddColumnModalVisible: false,
   };
 
 
@@ -34,7 +36,7 @@ export class BrowserEntity extends React.Component<BrowserEntityProps, BrowserEn
     return Connected.state((state: StoreState, props) => {
       return {
         entity: state.entities[props.match.params.entity],
-        schemas: getSchemas(state)[props.match.params.entity]
+        schemas: getSchemas(state)
       }
     })
   }
@@ -66,7 +68,7 @@ export class BrowserEntity extends React.Component<BrowserEntityProps, BrowserEn
 
 
   get columns() {
-    const {fields} = this.model.schemas;
+    const {fields} = this.model.schemas[this.props.match.params.entity];
     return Object.keys(fields).map((name) => {
       return {
         field: name,
@@ -77,44 +79,12 @@ export class BrowserEntity extends React.Component<BrowserEntityProps, BrowserEn
     })
   }
 
-  closeModal = () => {
-    this.setState({isModalVisible: false});
-  };
-
-  showModal = () => {
-    this.setState({isModalVisible: true});
-  };
-
-  removeSchema = async () => {
-    await this.actions.deleteSchema(this.props.match.params.entity);
-    this.props.history.push(`/browser/`)
-    await this.actions.fetchSchemas();
-  };
-
-  renderModal = () => {
-    return (this.state.isModalVisible &&
-      <ConfirmationModal
-        onClose={this.closeModal}
-        onConfirm={this.removeSchema}
-        ctaText="Remove"
-        title={`Delete class "${this.props.match.params.entity}" ?`}
-        body="You can't recover deleted data."
-      />
-    );
-  };
 
   render() {
     const {entity = {browse: {fetching: true}}} = this.model || {};
     //todo replace EuiInMemoryTable
     return (<div>
-      <div className='duiEntityHeader'>
-        <EuiTitle>
-          <h2>{this.props.match.params.entity}</h2>
-        </EuiTitle>
-        <EuiButton onClick={this.showModal}>Remove Class</EuiButton>
-      </div>
-      {this.renderModal()}
-      BrowserEntity - fetching {entity.browse.fetching ? "YES" : "NO"}<br/>
+      <BrowserEntityHeader/>
       <EuiInMemoryTable
         loading={entity.browse.fetching}
         error={entity.browse.message}
@@ -126,10 +96,11 @@ export class BrowserEntity extends React.Component<BrowserEntityProps, BrowserEn
   }
 }
 
-export interface BrowserEntityProps extends Partial<RouteComponentProps<{ entity: string, appId: string }>> {
+export interface BrowserEntityProps extends InjectedFormProps, Partial<RouteComponentProps<{ entity: string, appId: string }>> {
 }
 
 export interface BrowserEntityState {
-  isModalVisible: boolean
+  isRemoveModalVisible: boolean
+  isAddColumnModalVisible: boolean
 }
     

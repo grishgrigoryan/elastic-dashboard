@@ -25,7 +25,6 @@ export class ConfirmationModal extends React.Component<ConfirmationModalProps, C
           </EuiModalHeader>
           <EuiModalBody>
             {this.props.body}
-            You can't recover deleted data.
           </EuiModalBody>
           <EuiModalFooter>
             <EuiButtonEmpty onClick={() => {
