@@ -14,8 +14,8 @@ import {StoreState}        from "../../store/state";
 import {Input}             from "../../components/form/Input";
 import {Select}            from "../../components/form/Select";
 
-@ReduxForm({form: 'add-column'})
 @Connected
+@ReduxForm({form: 'add-column'})
 export class AddColumnForm extends React.Component<AddColumnFormProps, AddColumnFormState> {
 
   @Connected
@@ -24,6 +24,7 @@ export class AddColumnForm extends React.Component<AddColumnFormProps, AddColumn
     return Connected.state((state: StoreState, props) => {
       return {
         selectedType: selector(state, 'type'),
+        initialValues:{name:"SOME NAME"},
         entityNames: getEntityNames(state),
         fields: getSchemas(state)[props.entityName]
       }

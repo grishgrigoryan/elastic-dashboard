@@ -1,6 +1,20 @@
 import {Schemas} from "../store/state";
 import {Actions} from "./index";
+declare namespace Parse {
+  class Schema extends Object {
+    static all(): Promise<Array<any>>;
 
+    delete(): Promise<any>;
+
+    save(): Promise<any>;
+
+    update(): Promise<any>;
+
+    get(): Promise<Schema>;
+
+    deleteField(fieldName: string): any
+  }
+}
 export function initialized() {
   return {initialized: true}
 }

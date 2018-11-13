@@ -24,10 +24,9 @@ import {EuiButtonEmpty}      from '@elastic/eui';
 import {EuiFlexItem}         from '@elastic/eui';
 import {Field}               from 'redux-form';
 
-
-@WithRouter
-@ReduxForm({form: 'add-schema'})
 @Connected
+@ReduxForm({form: 'add-schema'})
+@WithRouter
 export class BrowserNavBar extends React.Component<BrowserNavBarProps, BrowserNavBarState> {
 
   state = {
@@ -37,7 +36,9 @@ export class BrowserNavBar extends React.Component<BrowserNavBarProps, BrowserNa
   @Connected
   get model() {
     return Connected.state((state: StoreState, props) => {
-      return {entities: getEntityNames(state)}
+      return {
+        entities: getEntityNames(state),
+      }
     })
   }
 

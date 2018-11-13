@@ -115,7 +115,6 @@ export class BrowserEntityHeader extends React.Component<BrowserEntityHeaderProp
 
   };
 
-
   onRemoveColumnSubmit = async ({column}) => {
     try {
       await this.actions.deleteField(this.entityName, column)
@@ -127,7 +126,6 @@ export class BrowserEntityHeader extends React.Component<BrowserEntityHeaderProp
     }
 
   };
-
 
   renderAddColumnModal = () => {
     return (this.state.isAddColumnModalVisible && <EuiOverlayMask>

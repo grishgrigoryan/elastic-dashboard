@@ -6,9 +6,18 @@ import {updateMessage}               from './BrowseActions';
 import {extra}                       from './BrowseActions';
 import {updateSchemas}               from "./AppActions";
 import {initialized}                 from "./AppActions";
+import {updatePagination}            from "./EntityActions";
+import {updateTableIds}              from "./EntityActions";
+import {updateSortField}             from "./EntityActions";
+import {updateExpandedRowMop}        from "./EntityActions";
 import {updateEntity}                from "./EntityActions";
-import {fetchingEntity}                from "./EntityActions";
-import {errorMessageEntity}                from "./EntityActions";
+import {updateModal}                 from "./EntityActions";
+import {fetchingEntity}              from "./EntityActions";
+import {deleteEntityItemData}        from "./EntityActions";
+import {updateItemModalForm}         from "./EntityActions";
+import {updateEntityItemData}        from "./EntityActions";
+import {removeFromTableIds}          from "./EntityActions";
+import {errorMessageEntity}          from "./EntityActions";
 import {updateApplications}          from "./SessionActions";
 import {changeSelectedApplicationId} from "./SessionActions";
 import {updateSessionUser}           from "./SessionActions";
@@ -26,6 +35,15 @@ export const Actions = createActions({
   updateSessionUser,
   // ENTITY
   updateEntity,
+  updatePagination,
+  updateTableIds,
+  updateSortField,
+  updateExpandedRowMop,
+  deleteEntityItemData,
+  removeFromTableIds,
+  updateItemModalForm,
+  updateModal,
+  updateEntityItemData,
   fetchingEntity,
   errorMessageEntity,
   //

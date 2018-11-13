@@ -2,7 +2,7 @@ import {combineReducers} from 'redux';
 import {app}             from "./app";
 import {browse}          from './browse';
 import {session}         from './session';
-import {entities}        from './entities';
+import {entities}        from './entities/index';
 import {reducer as form} from 'redux-form'
 
 

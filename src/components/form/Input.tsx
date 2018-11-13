@@ -18,7 +18,6 @@ export class Input extends React.Component<InputProps, InputState> {
       meta: {touched, error, valid},
       ...rest
     } = this.props;
-    console.log(input);
     return (
       <EuiFormRow label={label} fullWidth={true} error={error} isInvalid={!valid}>
         {

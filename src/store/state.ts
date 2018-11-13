@@ -18,7 +18,7 @@ export type Applications = Normalized<Application>
 export interface Schema {
   className: string
   fields: {
-    [name: string]: {type:"String" | "Date" | "ACL" | "Boolean" | "Object"}
+    [name: string]: { type: "String" | "Date" | "ACL" | "Boolean" | "Object" }
   }
   classLevelPermissions: {
     find: any;
@@ -52,11 +52,22 @@ export interface Entity {
   byId?: any
   ids?: Array<any>,
   browse?: {
-    totalPages?: number,
-    fetching?:boolean,
-    message?:string,
+    pageIndex?: number,
+    tableIds?: Array<string>
+    sort?: {
+      field: string,
+      direction: "asc" | 'desc',
+    }
+    totalItemCount?: number,
+    expandedRowMop?: any,
+    itemModalForm?: { objectId?: string, mode?: 'EDIT' | 'CREATE' | 'DELETE' }
+    modal?: 'CLASS_DELETE' | 'COLUMN_ADD' | 'COLUMN_DELETE'
+    pageSize?: number,
+    fetching?: boolean,
+    message?: string,
     [k: string]: any
   }
+
   [k: string]: any
 }
 
@@ -85,7 +96,7 @@ const initialState: StoreState = {
   },
   browse: {
     loading: false,
-    message: 'INITIAL MESSAGE'
+    message: 'INITIAL MESSAGE',
   },
   entities: {}
 

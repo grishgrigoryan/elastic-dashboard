@@ -62,7 +62,9 @@ export class Login extends React.Component<LoginProps, LoginState> {
       await this.actions.fetchSchemas();
       this.props.history.push(`/config`)
     } catch (e) {
-      alert()
+      throw new SubmissionError({
+        username: e.message,
+      })
     }
 
   };
