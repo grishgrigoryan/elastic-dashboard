@@ -5,6 +5,7 @@ import {doSomething}                 from './BrowseActions';
 import {updateMessage}               from './BrowseActions';
 import {extra}                       from './BrowseActions';
 import {updateSchemas}               from "./AppActions";
+import {deleteSchemaData}               from "./AppActions";
 import {initialized}                 from "./AppActions";
 import {updatePagination}            from "./EntityActions";
 import {updateTableIds}              from "./EntityActions";
@@ -30,8 +31,10 @@ export const Actions = createActions({
   changeSelectedApplicationId,
   updateApplications,
   hideLoader,
+  //app
   updateSchemas,
   initialized,
+  deleteSchemaData,
   updateSessionUser,
   // ENTITY
   updateEntity,

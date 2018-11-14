@@ -84,7 +84,7 @@ export const fetchTableData = (className: string, pageIndex?: number, pageSize?:
       dispatch(Actions.fetchingEntity(className, false));
     }
   }
-}
+};
 
 export const updateEntityItem = (className: string, payload) => {
   return async (dispatch: any) => {
@@ -97,9 +97,9 @@ export const updateEntityItem = (className: string, payload) => {
     item = new Clazz();
     await item.save(payload);
     dispatch(Actions.updateEntityItemData(className, item.toJSON()));
-    return item
+    return item.toJSON();
   }
-}
+};
 export const deleteEntityItem = (className: string, objectId: string) => {
   return async (dispatch: any) => {
     let item;
@@ -109,4 +109,4 @@ export const deleteEntityItem = (className: string, objectId: string) => {
     dispatch(Actions.deleteEntityItemData(className, objectId));
     return item
   }
-}
+};

@@ -1,5 +1,6 @@
 import {Schemas} from "../store/state";
 import {Actions} from "./index";
+
 declare namespace Parse {
   class Schema extends Object {
     static all(): Promise<Array<any>>;
@@ -15,12 +16,18 @@ declare namespace Parse {
     deleteField(fieldName: string): any
   }
 }
+
 export function initialized() {
   return {initialized: true}
 }
 
 export function updateSchemas(schemas: Schemas) {
   return {schemas}
+}
+
+
+export function deleteSchemaData(className) {
+  return {className}
 }
 
 export const fetchSchemas = () => {
@@ -43,6 +50,7 @@ export const createSchema = (name: string) => {
 export const deleteSchema = (name: string) => {
   return async (dispatch: any, getState: any) => {
     await new Parse.Schema(name).delete();
+    dispatch(Actions.deleteSchemaData(name));
   }
 };
 export const addField = (className: string, fieldName: string, type: any, targetClass?: string) => {

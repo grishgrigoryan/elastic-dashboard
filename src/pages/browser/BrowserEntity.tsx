@@ -29,10 +29,10 @@ import {WithRouter}          from "../../decorators/WithRouter";
 import {getSchemas}          from "../../selectors/app";
 import {StoreState}          from "../../store/state";
 import {InjectedFormProps}   from "redux-form";
-import {BrowserEntityHeader} from "./BrowserEntityHeader";
 import {RIGHT_ALIGNMENT}     from '@elastic/eui/lib/services';
 import {LEFT_ALIGNMENT}      from '@elastic/eui/lib/services';
 import {EntityItemModal}     from "./EntityItemModal";
+import {EntityModal}         from "./EntityModal";
 
 
 @WithRouter
@@ -63,7 +63,8 @@ export class BrowserEntity extends React.Component<BrowserEntityProps, BrowserEn
           direction: "asc"
         },
         expandedRowMop: state.entities[props.match.params.entity] && state.entities[props.match.params.entity].browse.expandedRowMop || {},
-        showModal: state.entities[props.match.params.entity] && state.entities[props.match.params.entity].browse.itemModalForm && state.entities[props.match.params.entity].browse.itemModalForm.mode,
+        showItemModal: state.entities[props.match.params.entity] && state.entities[props.match.params.entity].browse.itemModalForm && state.entities[props.match.params.entity].browse.itemModalForm.mode,
+        showEntityModal: state.entities[props.match.params.entity] && state.entities[props.match.params.entity].browse.modal,
       }
     })
   }
@@ -235,7 +236,6 @@ export class BrowserEntity extends React.Component<BrowserEntityProps, BrowserEn
   render() {
     const {entity = {browse: {fetching: true}}} = this.model || {};
     return (<div>
-      <BrowserEntityHeader/>
       <EuiSpacer size="l"/>
       <EuiFlexGroup gutterSize="l">
         <EuiFlexItem>
@@ -267,7 +267,8 @@ export class BrowserEntity extends React.Component<BrowserEntityProps, BrowserEn
         onChange={this.onTableChange}
         pagination={this.pagination}
       />
-      {this.model.showModal && <EntityItemModal/>}
+      {this.model.showItemModal && <EntityItemModal/>}
+      {this.model.showEntityModal && <EntityModal/>}
     </div>)
   }
 }

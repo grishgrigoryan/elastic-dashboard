@@ -1,17 +1,7 @@
 import * as React            from 'react';
-import {createSchema}        from "../../actions/AppActions";
-import {fetchSchemas}        from "../../actions/AppActions";
-import {Input}               from "../../components/form/Input";
-import {NavBar}              from "../../components/NavBar";
-import {NavBarItem}          from "../../components/NavBarItem";
-import {Connected}           from "../../decorators/Connected";
 import {Form}                from "redux-form";
 import {SubmissionError}     from "redux-form";
 import {InjectedFormProps}   from "redux-form";
-import {ReduxForm}           from "../../decorators/ReduxForm";
-import {WithRouter}          from "../../decorators/WithRouter";
-import {getEntityNames}      from "../../selectors/app";
-import {StoreState}          from "../../store/state";
 import {EuiForm}             from '@elastic/eui';
 import {EuiButton}           from '@elastic/eui';
 import {EuiModal}            from '@elastic/eui';
@@ -23,6 +13,17 @@ import {EuiModalFooter}      from '@elastic/eui';
 import {EuiButtonEmpty}      from '@elastic/eui';
 import {EuiFlexItem}         from '@elastic/eui';
 import {Field}               from 'redux-form';
+import {ReduxForm}           from "../../decorators/ReduxForm";
+import {WithRouter}          from "../../decorators/WithRouter";
+import {getEntityNames}      from "../../selectors/app";
+import {StoreState}          from "../../store/state";
+import {createSchema}        from "../../actions/AppActions";
+import {fetchSchemas}        from "../../actions/AppActions";
+import {Input}               from "../../components/form/Input";
+import {NavBar}              from "../../components/NavBar";
+import {NavBarItem}          from "../../components/NavBarItem";
+import {Connected}           from "../../decorators/Connected";
+
 
 @Connected
 @ReduxForm({form: 'add-schema'})
